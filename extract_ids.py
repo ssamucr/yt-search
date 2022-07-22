@@ -23,3 +23,4 @@ def extractIDS(string):
           cont += 1
 
   video_ids = video_ids[0:cont]  # Stores the unrepeated results
+  return video_ids
