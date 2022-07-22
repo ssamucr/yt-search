@@ -1,6 +1,7 @@
 import urllib.request
-import extract-ids.extractIDS
+from extract_ids import extract_ids
 import pywhatkit
+import re
 
 # ----------------------------------------------------------------------------------------------------
 # This code receives a key word to search, open the default browser and play the first occurrence
@@ -15,6 +16,6 @@ html = urllib.request.urlopen(f"https://www.youtube.com/results?search_query={se
 # Convert the object to a string
 string = html.read().decode()
 
-video_ids = extractIDS(string)
+video_ids = extract_ids(string)
 
 pywhatkit.playonyt(f"https://www.youtube.com/watch?v={video_ids[0]}")  # Searches the first result
