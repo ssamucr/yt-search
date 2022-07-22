@@ -1,6 +1,7 @@
 import urllib.request
-import re
+from extract_ids import extract_ids
 import pywhatkit
+import re
 
 # ----------------------------------------------------------------------------------------------------
 # This code receives a key word to search, open the default browser and play the first occurrence
@@ -15,23 +16,6 @@ html = urllib.request.urlopen(f"https://www.youtube.com/results?search_query={se
 # Convert the object to a string
 string = html.read().decode()
 
-# print(re.findall(r'/watch\?v=.{11,11}', cadena))
-video_ids = re.findall(r'/watch\?v=(.{11})', string)  # Stores a list with the ids of the videos
-
-# Eliminates the repeated results
-actual = ""
-cont = 1
-for x in range(len(video_ids)):
-    if x == 0:
-        actual = video_ids[x]
-        cont = 1
-    elif actual == video_ids[x]:
-        limit = x
-    elif actual != video_ids[x]:
-        actual = video_ids[x]
-        video_ids[cont] = actual
-        cont += 1
-
-video_ids = video_ids[0:cont]  # Stores the unrepeated results
+video_ids = extract_ids(string)
 
 pywhatkit.playonyt(f"https://www.youtube.com/watch?v={video_ids[0]}")  # Searches the first result
